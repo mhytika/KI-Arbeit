@@ -1,0 +1,172 @@
+/* Active Role State */
+.role-card.active {
+    border-color: rgb(var(--role-color));
+    box-shadow: 0 0 0 4px rgba(var(--role-color), 0.3), 0 12px 24px -8px rgba(0, 0, 0, 0.4);
+    transform: translateY(-8px);
+    background-color: rgba(var(--role-color), 0.1);
+}
+
+.role-card.active::before {
+    height: 100%;
+    opacity: 0.1;
+}
+
+/* Role Selection Footer (Next Button) */
+#role-selection-footer {
+    margin-top: 2rem;
+    height: 60px;
+    /* Reserve space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Role Intro Screen (Screen 3) */
+#role-intro {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+    overflow-y: auto;
+    /* Allow scrolling if content is long */
+}
+
+.role-intro-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.role-intro-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-size: 108%;
+    /* Zoom to crop border */
+    background-position: center;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border: 4px solid rgba(255, 255, 255, 0.1);
+}
+
+.role-intro-title h2 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-primary);
+}
+
+.role-intro-title span {
+    font-size: 1.2rem;
+    color: rgb(var(--role-color));
+    /* Dynamic color */
+    font-weight: 600;
+}
+
+.role-intro-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.intro-summary {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid rgb(var(--role-color));
+}
+
+.intro-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.intro-section {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.intro-section h3 {
+    font-size: 1.1rem;
+    margin: 0 0 1rem 0;
+    color: rgb(var(--role-color));
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.section-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.intro-section ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.intro-section li {
+    margin-bottom: 0.5rem;
+}
+
+.role-intro-footer {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.intro-hint {
+    color: var(--text-secondary);
+    text-align: center;
+    max-width: 600px;
+}
+
+.footer-buttons {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    justify-content: space-between;
+}
+
+/* Custom Scrollbar for Intro */
+#role-intro::-webkit-scrollbar {
+    width: 8px;
+}
+
+#role-intro::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#role-intro::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+#role-intro::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}

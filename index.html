@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KI & Arbeitswelt – Szenario-Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="role_intro_styles.css">
+    <link rel="stylesheet" href="scenario_styles.css">
+    <link rel="stylesheet" href="game_loop_styles.css">
+    <link rel="stylesheet" href="quiz_styles.css?v=4">
+    <link rel="stylesheet" href="taetigkeiten_styles.css">
+    <link rel="stylesheet" href="src/screen7_tasks_sort.css">
+    <link rel="stylesheet" href="src/screen8_end.css">
+    <link rel="stylesheet" href="src/screen_score.css">
+</head>
+
+<body>
+    <div id="orientation-warning" class="hidden">
+        <div class="warning-content">
+            <p>Bitte dein Gerät ins Querformat drehen, um das Spiel zu spielen.</p>
+        </div>
+    </div>
+
+    <div id="transition-overlay">
+        <div class="transition-text">2030</div>
+    </div>
+
+    <!-- Main Game Shell -->
+    <main id="game-shell">
+        <header id="game-header">
+            <h1>KI & Arbeitswelt</h1>
+        </header>
+
+        <section id="game-layout">
+            <!-- Left/Top: Game Visuals (Canvas placeholder) -->
+            <!-- Game Area removed -->
+
+            <!-- Right/Bottom: UI & Interaction -->
+            <aside id="ui-area" class="fullscreen-center">
+
+                <!-- Start Screen -->
+                <div id="start-screen" class="fade-in">
+                    <h1 class="main-title">Wie verändert KI<br>deinen Job bis 2030?</h1>
+
+                    <p class="intro-text">
+                        Triff Entscheidungen in echten <strong>Szenarien</strong>: Wähle zuerst einen Beruf – dann
+                        siehst du, was sich bis 2030 in deiner Firma und in Deutschland ändern könnte.
+                    </p>
+
+                    <div class="feature-badges">
+                        <span class="badge">5 Berufe ausprobieren</span>
+                        <span class="badge">3 Zukunfts-Szenarien erleben</span>
+                        <span class="badge">Quiz & Werte-Tracking</span>
+                    </div>
+
+                    <div class="avatar-container">
+                        <div class="avatar-circle">
+                            <img src="assets/Lpb_Logo.jpg" alt="Landeszentrale für politische Bildung Baden-Württemberg" class="lpb-logo">
+                        </div>
+                    </div>
+
+              
+
+                    <button id="start-button" class="btn-primary">Start ▶</button>
+
+                    <footer class="game-footer">
+                        Ein Spiel gestaltet von Tobias Naber nach den Szenarien von Nikolas Hubel, Robert Peters, Mona Hille, Kerstin
+                        Goluchowicz / Denkfabrik digitale Arbeitsgesellschaft
+                    </footer>
+                </div>
+
+                <!-- Role Selection Screen (Hidden by default) -->
+                <div id="role-selection" class="hidden fade-in">
+                    <h2 class="section-title">Wähle einen Beruf</h2>
+                    <p class="section-subtitle">In welche Rolle möchtest du schlüpfen?</p>
+
+                    <div class="role-grid">
+                        <div class="role-card" data-role="1" style="--role-color: 40, 100, 240;">
+                            <div class="role-icon">🏭</div>
+                            <h3 class="role-title">Max Sander<br><span class="role-sector">Facharbeiter
+                                    (Industrie)</span></h3>
+                        </div>
+                        <div class="role-card" data-role="2" style="--role-color: 140, 80, 220;">
+                            <div class="role-icon">🤝</div>
+                            <h3 class="role-title">Toni Botelli<br><span class="role-sector">Personalberaterin</span>
+                            </h3>
+                        </div>
+                        <div class="role-card" data-role="3" style="--role-color: 20, 160, 120;">
+                            <div class="role-icon">🏥</div>
+                            <h3 class="role-title">Ahmed Al-Hassan<br><span class="role-sector">Pflegefachkraft</span>
+                            </h3>
+                        </div>
+                        <div class="role-card" data-role="4" style="--role-color: 90, 120, 200;">
+                            <div class="role-icon">📁</div>
+                            <h3 class="role-title">Maria Schmidt<br><span class="role-sector">Sachbearbeiterin</span>
+                            </h3>
+                        </div>
+                        <div class="role-card" data-role="5" style="--role-color: 240, 120, 50;">
+                            <div class="role-icon">✍️</div>
+                            <h3 class="role-title">Marcela Paz<br><span class="role-sector">Werbetexterin</span></h3>
+                        </div>
+                    </div>
+
+                    <div id="role-selection-footer" class="hidden fade-in">
+                        <button id="role-next-button" class="btn-primary">Weiter ▶</button>
+                    </div>
+
+                    <button id="back-to-start" class="btn-secondary">← Zurück</button>
+                </div>
+
+                <!-- Role Intro Screen (Screen 3) -->
+                <div id="role-intro" class="hidden fade-in">
+                    <header class="role-intro-header">
+                        <div class="role-intro-avatar"></div>
+                        <div class="role-intro-title">
+                            <h2 id="intro-role-name">Role Name</h2>
+                            <span id="intro-role-sector">Sector</span>
+                        </div>
+                    </header>
+
+                    <div class="role-intro-content">
+                        <div id="intro-summary" class="intro-summary"></div>
+                        <div id="intro-sections" class="intro-sections">
+                            <!-- Dynamic Content -->
+                        </div>
+                    </div>
+
+                    <div class="role-intro-footer">
+                        <p class="intro-hint">Als Nächstes wählst du ein <strong>Szenario</strong> für Deutschland 2030.
+                        </p>
+                        <div class="footer-buttons">
+                            <button id="back-to-roles" class="btn-secondary">← Zurück</button>
+                            <button id="to-scenario" class="btn-primary">Szenario wählen ▶</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scenario Selection Screen (Screen 4) -->
+                <div id="scenario-selection" class="hidden fade-in">
+                    <header class="scenario-header">
+                        <div class="header-content">
+                            <div class="scenario-avatar"></div>
+                            <div class="header-text">
+                                <h2>KI-Szenarien für Deutschland 2030</h2>
+                                <p class="subtitle">Der Standort Deutschland und deine berufliche Tätigkeit wird sich je
+                                    nach Szenario ändern</p>
+                                <p class="instruction">Wähle das Szenario, das du für 2030 in Sachen KI am
+                                    realistischsten hältst</p>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div class="scenario-grid">
+                        <!-- Scenario 1 -->
+                        <div class="scenario-card" data-scenario="1">
+                            <h3>1) Wettbewerbsfähiges KI-Ökosystem</h3>
+                            <p class="scenario-desc">Deutschland/EU bauen eigene KI auf, mit klaren Regeln und viel
+                                Schulung.</p>
+
+                            <div class="scenario-details">
+                                <div class="detail-block">
+                                    <h4 class="positive">✅ Annahmen was passiert:</h4>
+                                    <ul>
+                                        <li>Eigene Modelle & Datenräume hier in Europa</li>
+                                        <li>Sinnvolle Regeln → Qualität & Vertrauen</li>
+                                        <li>Weiterbildungen für viele Beschäftigte</li>
+                                        <li>KI wird regelmäßig geprüft und verbessert</li>
+                                    </ul>
+                                </div>
+                                <div class="detail-block">
+                                    <h4 class="negative">❌ Passiert weniger/nicht</h4>
+                                    <ul>
+                                        <li>Abhängigkeit von wenigen Auslands-Anbietern</li>
+                                        <li>Undurchsichtige Entscheidungen ohne Kontrolle</li>
+                                        <li>Chaos bei Technik-Standards</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scenario 2 -->
+                        <div class="scenario-card" data-scenario="2">
+                            <h3>2) Zaungast der KI-Revolution</h3>
+                            <p class="scenario-desc">Firmen kaufen KI von großen Anbietern; wenig eigene
+                                Entwicklung,
+                                viel Papierkram.</p>
+
+                            <div class="scenario-details">
+                                <div class="detail-block">
+                                    <h4 class="positive">✅ Annahmen was passiert:</h4>
+                                    <ul>
+                                        <li>Zukauf fertiger Basismodelle</li>
+                                        <li>Viele Vorgaben → viel Dokumentation</li>
+                                        <li>Externe Spezialist*innen übernehmen viel</li>
+                                    </ul>
+                                </div>
+                                <div class="detail-block">
+                                    <h4 class="negative">❌ Passiert weniger/nicht</h4>
+                                    <ul>
+                                        <li>Eigene KI-Forschung und Start-ups</li>
+                                        <li>Schulung für alle Beschäftigten</li>
+                                        <li>Gleichbleibende Qualität (Ergebnisse schwanken öfter)</li>
+                                        <li>Neue digitale Geschäftsmodelle</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scenario 3 -->
+                        <div class="scenario-card" data-scenario="3">
+                            <h3>3) Starke Nischen-KI (die „Hidden Champions“)</h3>
+                            <p class="scenario-desc">Deutsche Betriebe setzen auf spezialisierte KI für ihre Branche
+                                –
+                                mit guten, passenden Daten.</p>
+
+                            <div class="scenario-details">
+                                <div class="detail-block">
+                                    <h4 class="positive">✅ Annahmen was passiert:</h4>
+                                    <ul>
+                                        <li>Branchen-KI (z. B. für Maschinenbau,
+                                            Pharma)</li>
+                                        <li>Zusammenarbeit mit Forschung; klare
+                                            Schnittstellen</li>
+                                        <li>Nachvollziehbare KI-Entscheidungen (man
+                                            sieht, warum etwas vorgeschlagen
+                                            wird)</li>
+                                        <li>Hohe Qualität → guter Ruf im In- und
+                                            Ausland</li>
+                                    </ul>
+                                </div>
+                                <div class="detail-block">
+                                    <h4 class="negative">❌ Passiert weniger/nicht</h4>
+                                    <ul>
+                                        <li>Undurchsichtige KI („man weiß nicht, wie
+                                            sie entscheidet“)</li>
+                                        <li>Durcheinander bei Programmen/Anbindungen</li>
+                                        <li>„Hauptsache schnell“ – Qualität zählt mehr als Tempo
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-footer">
+                        <div class="footer-buttons">
+                            <button id="back-to-intro" class="btn-secondary">← Zurück</button>
+                            <button id="scenario-next-button" class="btn-primary">Weiter ▶</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Loop Screen (Screen 5) -->
+                <div id="game-loop" class="hidden fade-in">
+                    <header class="game-header">
+                        <div class="header-content">
+                            <div id="gl-avatar" class="gl-avatar"></div>
+                            <div class="header-text">
+                                <h2 id="gl-scenario-title">Szenario Title</h2>
+                                <p id="gl-scenario-subtitle" class="subtitle">Subtitle</p>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div class="gl-content">
+                        <div id="gl-intro-text" class="game-intro-text">
+                            <!-- Dynamic Intro Text -->
+                        </div>
+
+                        <div class="sliders-grid" id="gl-sliders">
+                            <!-- Sliders will be injected here by main.js -->
+                        </div>
+                    </div>
+
+                    <div class="game-footer">
+                        <div class="game-footer-buttons">
+                            <button id="gl-back-button" class="btn-secondary">← Zurück</button>
+                            <button id="gl-check-button" class="btn-check" disabled>Prüfen</button>
+                            <button id="gl-next-button" class="btn-primary hidden">Weiter ▶</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Screen (Screen 6) -->
+                <div id="quiz-screen" class="hidden fade-in">
+                    <div class="quiz-header">
+                        <div class="quiz-header-content">
+                            <div class="quiz-avatar" id="quiz-avatar"></div>
+                            <div class="quiz-header-text">
+                                <h2 id="quiz-role-title">Role Name</h2>
+                                <p id="quiz-scenario-title" class="subtitle">Scenario Name</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-main-title">Quiz</div>
+                    <div class="quiz-instruction">Wähle die jeweils passende Antwort aus</div>
+
+                    <div class="quiz-content">
+                        <div class="quiz-question-container">
+                            <h3 id="quiz-question-text" class="question-text">Question Text</h3>
+                            <div id="quiz-options-container" class="quiz-options">
+                                <!-- Options will be injected here -->
+                            </div>
+                            <div id="quiz-feedback" class="quiz-feedback hidden">
+                                <!-- Feedback text -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-footer">
+                        <button id="quiz-back-btn" class="btn-secondary">← Zurück</button>
+                        <button id="quiz-check-btn" class="btn-primary">Prüfen</button>
+                        <button id="quiz-next-btn" class="btn-primary hidden">Nächste Frage ▶</button>
+                    </div>
+                </div>
+
+                <!-- Screen 7: Activities Sorting (Tätigkeiten) -->
+                <div id="taetigkeiten-screen" class="hidden fade-in">
+                    <div class="quiz-header">
+                        <div class="quiz-header-content">
+                            <div id="taetigkeiten-avatar" class="quiz-avatar"></div>
+                            <div class="quiz-header-text">
+                                <h2 id="taetigkeiten-role-title">Rolle</h2>
+                                <p id="taetigkeiten-intro-text">Im Jahr 2030 verändern sich die Tätigkeiten:
+                                    Einige Tätigkeiten bleiben klar kreativ-menschlich, bei anderen helfen
+                                    schlaue Werkzeuge, und manches läuft im Hintergrund automatisch.</p>
+                            </div>
+                        </div>
+                        <p class="taetigkeiten-instruction">Ordne die Tätigkeiten des Berufes den passenden Bereichen
+                            zu:</p>
+                    </div>
+
+                    <div class="taetigkeiten-content">
+                        <div class="taetigkeiten-container">
+                            <!-- 5 Variants Placeholder -->
+                            <div class="taetigkeit-card">Tätigkeit 1</div>
+                            <div class="taetigkeit-card">Tätigkeit 2</div>
+                            <div class="taetigkeit-card">Tätigkeit 3</div>
+                            <div class="taetigkeit-card">Tätigkeit 4</div>
+                            <div class="taetigkeit-card">Tätigkeit 5</div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-footer">
+                        <button id="taetigkeiten-back-btn" class="btn-secondary">← Zurück</button>
+                        <button id="taetigkeiten-check-btn" class="btn-primary">Prüfen</button>
+                        <button id="taetigkeiten-next-btn" class="btn-primary hidden">Weiter ▶</button>
+                    </div>
+                </div>
+
+                <!-- Screen 7 (New): Tasks Sort Marcela -->
+                <section id="screen7-tasks" class="hidden" hidden></section>
+
+                <!-- Screen Score (Auswertung) -->
+                <section id="screen-score" class="hidden" hidden>
+                    <div class="score-header">
+                        <h1 class="score-title">Deine Auswertung</h1>
+                    </div>
+                    <div class="score-grid">
+                        <div class="score-card" data-type="values">
+                            <div class="score-card-icon" aria-hidden="true">📊</div>
+                            <div class="score-card-title">Werte des Unternehmens schätzen</div>
+                            <div class="score-card-value" id="score-values">– von 6 richtig</div>
+                            <div class="score-card-sub" id="score-values-sub">Gefühl für Datenreife & Umsetzung – ↺</div>
+                        </div>
+                        <div class="score-card" data-type="quiz">
+                            <div class="score-card-icon" aria-hidden="true">✅</div>
+                            <div class="score-card-title">Quizfragen</div>
+                            <div class="score-card-value" id="score-quiz">– von 3 richtig</div>
+                            <div class="score-card-sub" id="score-quiz-sub">Begriffe & Zusammenhänge – ↺</div>
+                        </div>
+                        <div class="score-card" data-type="tasks">
+                            <div class="score-card-icon" aria-hidden="true">🧩</div>
+                            <div class="score-card-title">Zuordnung von Tätigkeiten</div>
+                            <div class="score-card-value" id="score-tasks">– von 10 richtig</div>
+                            <div class="score-card-sub" id="score-tasks-sub">Human-Lead / Co-Pilot / Auto-Run – ↺</div>
+                        </div>
+                    </div>
+
+                    <div class="score-total">
+                        <div class="score-total-label" id="score-total-label">Deine Gesamtpunkte: – von 19 Punkten</div>
+                        <div class="score-progress" role="progressbar" aria-valuemin="0" aria-valuemax="19" aria-valuenow="0" aria-label="Gesamtpunkte">
+                            <div class="score-progress-fill" id="score-progress-fill"></div>
+                            <div class="score-progress-label" id="score-progress-text">0 / 19</div>
+                        </div>
+                    </div>
+
+                    <div class="score-claim" id="score-claim" aria-live="polite">
+                        <div class="score-claim-title" id="score-claim-title">Claim</div>
+                        <div class="score-claim-text" id="score-claim-text">Text</div>
+                    </div>
+
+                    <div class="score-footer">
+                        <button id="score-back" class="btn-secondary">← Zurück</button>
+                        <button id="score-next" class="btn-primary">Weiter ▶</button>
+                    </div>
+                </section>
+
+                <!-- Screen 8: Endscreen -->
+                <section id="screen8-end" class="hidden" hidden>
+                    <div class="s8-header">
+                        <div class="s8-header-top">
+                            <div class="s8-avatar" aria-hidden="true"></div>
+                            <div class="s8-title">Rolle</div>
+                        </div>
+                        <div class="s8-finale">Spielende! – Danke für deine Teilnahme</div>
+                        <p class="s8-intro">Intro</p>
+                    </div>
+
+                    <div class="s8-grid">
+                        <div class="s8-block s8-block-qual">
+                            <div class="s8-block-title">Wie sich die Qualifizierung ändern muss:</div>
+                            <div class="s8-list-wrap"></div>
+                        </div>
+                        <div class="s8-block s8-block-tasks">
+                            <div class="s8-block-title">Wie sich die Tätigkeiten ändern werden:</div>
+                            <div class="s8-list-wrap"></div>
+                        </div>
+                    </div>
+
+                    <div class="s8-question">Und welche Erkenntnisse nimmst du für dich mit?</div>
+
+                    <div class="s8-footer">
+                        <button id="s8-back" class="btn-secondary">← Zurück</button>
+                        <button id="s8-restart" class="btn-primary">Neues Spiel</button>
+                    </div>
+                </section>
+
+                <script src="gameData.js"></script>
+                <script src="main.js"></script>
+                <script src="src/screen7_tasks_sort_data.js"></script>
+                <script src="src/screen7_tasks_sort.js"></script>
+                <script src="src/screen_score.js"></script>
+                <script src="src/screen8_end_data.js"></script>
+                <script src="src/screen8_end.js"></script>
+</body>
+
+</html>
