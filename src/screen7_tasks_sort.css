@@ -232,27 +232,9 @@
 
     /* Accordion style or just stacked? Request said "Spalten untereinander" */
 
-    .s7-card-pool {
-        padding-bottom: 80px;
-        /* Space for sticky footer */
-    }
-
     .s7-card {
         width: 200px;
         padding: 14px 16px;
-    }
-
-    .s7-footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(10px);
-        padding: 15px;
-        justify-content: center;
-        z-index: 100;
-        margin: 0;
     }
 }
 
@@ -292,7 +274,12 @@
     justify-content: center;
     align-items: center;
     margin-top: 1.5rem;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+}
+
+#screen7-tasks .s7-buckets-container,
+#screen7-tasks .s7-card-pool {
+    margin-bottom: 1.25rem;
 }
 
 #screen7-tasks .hidden,
