@@ -1,0 +1,1088 @@
+/* =============================================
+   STYLES.CSS - CLEAN VERSION
+   Struktur: Variables → Reset → Layout → Components → Screens → Responsive
+   ============================================= */
+
+/* ======================
+   CSS VARIABLES
+   ====================== */
+:root {
+    --bg-dark: #1e293b;
+    --bg-card: #0f172a;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-blue: #3b82f6;
+    --accent-hover: #2563eb;
+    --badge-bg: #1e293b;
+    --badge-border: #334155;
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ======================
+   RESET & BASE
+   ====================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-main);
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+}
+
+/* ======================
+   UTILITY CLASSES
+   ====================== */
+.hidden {
+    display: none !important;
+}
+
+.fullscreen-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+/* ======================
+   MAIN LAYOUT STRUCTURE
+   ====================== */
+#game-shell {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-dark);
+    overflow: hidden;
+}
+
+#game-header {
+    height: 50px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    flex-shrink: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+#game-header h1 {
+    font-size: 1rem;
+    margin: 0;
+    color: var(--text-secondary);
+    opacity: 0.5;
+    font-weight: 400;
+}
+
+#game-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+#game-area {
+    display: none;
+}
+
+/* UI AREA - DER SCROLL CONTAINER */
+#ui-area {
+    flex: 1;
+    background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+    padding: 2rem;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ======================
+   ORIENTATION WARNING
+   ====================== */
+#orientation-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    color: white;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.warning-content {
+    padding: 2rem;
+    font-size: 1.5rem;
+    max-width: 600px;
+}
+
+/* ======================
+   TRANSITION OVERLAY
+   ====================== */
+#transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-dark);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#transition-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ======================
+   ANIMATIONS
+   ====================== */
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ======================
+   BUTTONS
+   ====================== */
+.btn-primary {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+}
+
+.btn-primary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 140px;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ======================
+   START SCREEN
+   ====================== */
+#start-screen {
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.main-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+    background: linear-gradient(to right, #fff, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+.intro-text {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 650px;
+    margin: 0;
+    text-align: center;
+}
+
+.intro-text strong {
+    color: var(--text-primary);
+}
+
+#start-screen .avatar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#start-screen .avatar-circle {
+    position: relative;
+    width: 190px;
+    height: 140px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#start-screen .avatar-circle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28);
+}
+
+#start-screen .lpb-logo {
+    width: 200px;
+    height: auto;
+    display: block;
+    border-radius: 14px;
+}
+
+.feature-badges {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.badge {
+    background-color: rgba(30, 41, 59, 0.5);
+    border: 1px solid var(--badge-border);
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    border-color: var(--accent-blue);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+.game-footer {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.5;
+    max-width: 600px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* ======================
+   ROLE SELECTION SCREEN
+   ====================== */
+#role-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 1rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.role-grid {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.role-card {
+    background-color: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.role-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: rgb(var(--role-color));
+    opacity: 0.7;
+    transition: height 0.3s ease;
+}
+
+.role-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.4);
+    border-color: rgba(var(--role-color), 0.5);
+}
+
+.role-card:hover::before {
+    height: 100%;
+    opacity: 0.1;
+}
+
+.role-card.active {
+    border-color: rgb(var(--role-color));
+    box-shadow: 0 0 0 4px rgba(var(--role-color), 0.3), 0 12px 24px -8px rgba(0, 0, 0, 0.4);
+    transform: translateY(-8px);
+    background-color: rgba(var(--role-color), 0.1);
+}
+
+.role-card.active::before {
+    height: 100%;
+    opacity: 0.1;
+}
+
+.role-icon {
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: 0;
+    color: transparent;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+    border-radius: 50%;
+}
+
+.role-card:hover .role-icon {
+    transform: scale(1.1);
+}
+
+/* Avatar Images */
+.role-card[data-role="1"] .role-icon {
+    background-image: url('assets/avatar_max.png');
+}
+
+.role-card[data-role="2"] .role-icon {
+    background-image: url('assets/avatar_toni.png');
+}
+
+.role-card[data-role="3"] .role-icon {
+    background-image: url('assets/avatar_ahmed.png');
+}
+
+.role-card[data-role="4"] .role-icon {
+    background-image: url('assets/avatar_maria.png');
+}
+
+.role-card[data-role="5"] .role-icon {
+    background-image: url('assets/avatar_marcela.png');
+}
+
+.role-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+    line-height: 1.4;
+    text-align: center;
+}
+
+.role-sector {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+    display: block;
+    margin-top: 0.2rem;
+}
+
+.role-card:hover .role-title {
+    color: rgb(var(--role-color));
+}
+
+#role-selection-footer {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#role-next-button {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#role-next-button:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#role-selection .btn-secondary {
+    margin-top: 2rem;
+}
+
+/* ======================
+   ROLE INTRO SCREEN (Screen 3)
+   ====================== */
+#role-intro {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+    min-height: 100%;
+}
+
+#role-intro .role-intro-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+    flex-shrink: 0;
+}
+
+#role-intro .role-intro-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+#role-intro .role-intro-title h2 {
+    font-size: 2rem;
+    margin: 0 0 0.2rem 0;
+    color: var(--text-primary);
+}
+
+#role-intro .role-intro-title span {
+    font-size: 1.1rem;
+    color: rgb(var(--role-color));
+    font-weight: 600;
+}
+
+#role-intro .role-intro-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#role-intro .intro-summary {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 12px;
+    border-left: 4px solid rgb(var(--role-color));
+}
+
+#role-intro .intro-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+#role-intro .intro-section {
+    background: var(--bg-card);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#role-intro .intro-section h3 {
+    font-size: 1.1rem;
+    margin: 0 0 0.8rem 0;
+    color: rgb(var(--role-color));
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+#role-intro .section-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+#role-intro .intro-section ul {
+    margin: 0;
+    padding: 0;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    list-style-position: inside;
+    text-align: left;
+}
+
+#role-intro .intro-section li {
+    margin-bottom: 0.5rem;
+}
+
+#role-intro .role-intro-footer {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+#role-intro .intro-hint {
+    color: var(--text-secondary);
+    text-align: center;
+    max-width: 600px;
+}
+
+#role-intro .footer-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#role-intro .footer-buttons button {
+    min-width: 140px;
+    max-width: 200px;
+}
+
+/* ======================
+   SLIDER CARDS (Game Loop)
+   ====================== */
+#gl-sliders {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 2rem auto;
+}
+
+.slider-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.slider-card.correct {
+    border-color: #22c55e;
+    background: rgba(34, 197, 94, 0.1);
+}
+
+.slider-card.incorrect {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.slider-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.slider-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-left: 1rem;
+    flex: 1;
+}
+
+.slider-value-display {
+    font-weight: 700;
+    color: var(--accent-blue);
+    font-size: 1.1rem;
+}
+
+.slider-container {
+    position: relative;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin: 1.5rem 0 0.5rem 0;
+}
+
+.slider-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--accent-blue);
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.target-marker {
+    position: absolute;
+    top: -6px;
+    width: 4px;
+    height: 20px;
+    background: #fbbf24;
+    z-index: 5;
+    display: none;
+}
+
+.game-slider {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: 28px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.result-text {
+    font-size: 0.9rem;
+    text-align: center;
+    min-height: 1.5rem;
+    margin-top: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.feedback-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    display: none;
+}
+
+.slider-card.correct .feedback-icon.check {
+    display: block;
+    color: #22c55e;
+}
+
+.slider-card.incorrect .feedback-icon.cross {
+    display: block;
+    color: #ef4444;
+}
+
+.game-footer-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 0;
+    width: 100%;
+}
+
+.game-footer-buttons button {
+    min-width: 160px;
+}
+
+/* ======================
+   SCROLLBAR STYLING
+   ====================== */
+#ui-area::-webkit-scrollbar {
+    width: 8px;
+}
+
+#ui-area::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#ui-area::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+#ui-area::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* =============================================
+   RESPONSIVE: TABLETS (901px - 1200px)
+   ============================================= */
+@media (max-width: 1200px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+
+    #gl-sliders {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .slider-card {
+        padding: 1rem;
+    }
+}
+
+/* =============================================
+   RESPONSIVE: SMALL TABLETS & LARGE PHONES (601px - 900px)
+   ============================================= */
+@media (max-width: 900px) {
+    #game-header {
+        position: relative;
+        height: auto;
+        padding: 0.5rem 1rem;
+    }
+
+    #ui-area {
+        padding: 1rem;
+    }
+
+    .main-title {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .role-grid {
+        gap: 1rem;
+    }
+
+    .role-card {
+        width: calc(50% - 0.5rem);
+        min-width: 150px;
+        padding: 1.25rem 1rem;
+    }
+
+    .role-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 1rem;
+    }
+
+    .role-title {
+        font-size: 0.95rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+        min-height: 44px;
+    }
+
+    #role-intro .intro-sections {
+        grid-template-columns: 1fr;
+    }
+
+    #gl-sliders {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =============================================
+   RESPONSIVE: PHONES (max 600px)
+   ============================================= */
+@media (max-width: 600px) {
+    #ui-area {
+        padding: 0.75rem;
+    }
+
+    #start-screen {
+        gap: 1rem;
+    }
+
+    .main-title {
+        font-size: 1.5rem;
+    }
+
+    .intro-text {
+        font-size: 0.9rem;
+    }
+
+    #start-screen .avatar-circle {
+        width: 140px;
+        height: 100px;
+    }
+
+    #start-screen .lpb-logo {
+        width: 150px;
+    }
+
+    .feature-badges {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .badge {
+        width: 100%;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .role-grid {
+        gap: 0.75rem;
+    }
+
+    .role-card {
+        width: calc(50% - 0.375rem);
+        min-width: 130px;
+        padding: 1rem 0.75rem;
+    }
+
+    .role-icon {
+        width: 55px;
+        height: 55px;
+        margin-bottom: 0.75rem;
+    }
+
+    .role-title {
+        font-size: 0.85rem;
+    }
+
+    .role-sector {
+        font-size: 0.7rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.7rem 1.25rem;
+        font-size: 0.9rem;
+    }
+
+    #role-selection .btn-secondary {
+        margin-top: 1.5rem;
+    }
+
+    #role-intro .role-intro-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+
+    #role-intro .role-intro-title h2 {
+        font-size: 1.5rem;
+    }
+
+    .game-footer {
+        font-size: 0.65rem;
+    }
+
+    .slider-card {
+        padding: 0.875rem;
+    }
+
+    .slider-title {
+        font-size: 0.9rem;
+    }
+
+    .slider-desc {
+        display: none;
+    }
+}
+
+/* =============================================
+   RESPONSIVE: VERY SMALL PHONES (max 400px)
+   ============================================= */
+@media (max-width: 400px) {
+    .main-title {
+        font-size: 1.3rem;
+    }
+
+    #start-screen .avatar-circle {
+        width: 120px;
+        height: 85px;
+    }
+
+    .role-card {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+    }
+}
+
+/* =============================================
+   PORTRAIT MODE OVERRIDES (Hochformat)
+   ============================================= */
+@media (max-aspect-ratio: 13/10) {
+
+    /* Screens brauchen padding-bottom für fixed footers */
+    #scenario-selection,
+    #game-loop,
+    #quiz-screen,
+    #taetigkeiten-screen,
+    #screen7-tasks {
+        padding-bottom: 100px;
+    }
+}
+
+/* =============================================
+   TOUCH DEVICE OPTIMIZATIONS
+   ============================================= */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Größere Touch-Targets */
+    .btn-primary,
+    .btn-secondary {
+        min-height: 48px;
+    }
+
+    .role-card {
+        /* Kein Hover-Effekt auf Touch */
+    }
+
+    .role-card:hover {
+        transform: none;
+    }
+
+    .role-card.active {
+        transform: none;
+    }
+}
