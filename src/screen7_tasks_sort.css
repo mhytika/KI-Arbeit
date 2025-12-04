@@ -1,0 +1,504 @@
+/* Screen 7 Scoped Styles */
+#screen7-tasks,
+#taetigkeiten-screen {
+    --s7-human: #E7B75F;
+    --s7-assist: #37C6E6;
+    --s7-auto: #9E7CFF;
+    --s7-ok: #2ECC71;
+    --s7-bad: #E74C3C;
+}
+
+#screen7-tasks {
+    width: 100%;
+    min-height: 100%;
+    /* GEÄNDERT von height: 100% */
+    display: block;
+    /* GEÄNDERT von flex */
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: visible;
+    /* GEÄNDERT - Parent scrollt */
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+.s7-header {
+    text-align: center;
+    margin-bottom: 20px;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+    /* NEU */
+    margin-right: auto;
+    /* NEU */
+}
+
+.s7-header-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.s7-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #555;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: block;
+}
+
+.s7-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.s7-intro {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    color: #ddd;
+}
+
+.s7-instruction {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent-blue);
+}
+
+/* Grid Layout for Buckets */
+.s7-buckets-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    /* NEU */
+    margin-right: auto;
+    /* NEU */
+}
+
+.s7-bucket {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 2px solid transparent;
+    /* Set dynamically */
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+    transition: all 0.3s ease;
+}
+
+.s7-bucket.drag-over {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.s7-bucket-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.s7-bucket-label {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid currentColor;
+    /* Uses the color set on parent/element */
+    margin-bottom: 5px;
+}
+
+.s7-bucket-sublabel {
+    display: block;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.s7-bucket-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 100px;
+    /* Drop zone area */
+    align-items: center;
+    /* Center cards horizontally */
+}
+
+.s7-why-claim {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    font-style: italic;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    border-left: 3px solid currentColor;
+    display: none;
+    /* Hidden initially */
+    animation: s7-fadeIn 0.5s ease forwards;
+}
+
+/* Card Pool */
+.s7-card-pool {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 30px;
+    min-height: 100px;
+    margin-left: auto;
+    /* NEU */
+    margin-right: auto;
+    /* NEU */
+}
+
+.s7-card {
+    background: #fff;
+    color: #333;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    cursor: grab;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: 200px;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s;
+    border: 2px solid transparent;
+
+    /* TOUCH-OPTIMIERUNG - Verhindert Text-Markierung */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    /* Verhindert iOS Popup */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    /* Kein blaues Highlight */
+}
+
+.s7-card:active {
+    cursor: grabbing;
+    transform: scale(1.02);
+}
+}
+
+.s7-card:active {
+    cursor: grabbing;
+}
+
+.s7-card.dragging {
+    opacity: 0.5;
+    transform: scale(1.05);
+}
+
+.s7-card.correct {
+    border-color: #2ecc71;
+    background: #eafaf1;
+}
+
+.s7-card.incorrect {
+    border-color: #e74c3c;
+    background: #fdedec;
+}
+
+/* Animations */
+@keyframes s7-fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 1199px) {
+    .s7-card {
+        width: 160px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .s7-buckets-container {
+        grid-template-columns: 1fr;
+        /* Stack columns */
+        gap: 15px;
+    }
+
+    .s7-bucket {
+        min-height: auto;
+    }
+
+    .s7-bucket-content {
+        min-height: 60px;
+    }
+
+    /* Accordion style or just stacked? Request said "Spalten untereinander" */
+
+    .s7-card {
+        width: 200px;
+        padding: 14px 16px;
+    }
+}
+
+/* Card feedback states */
+#screen7-tasks .s7-card--correct,
+#taetigkeiten-screen .s7-card--correct {
+    border: 2px solid var(--s7-ok);
+}
+
+#screen7-tasks .s7-card--wrong,
+#taetigkeiten-screen .s7-card--wrong {
+    border: 2px solid var(--s7-bad);
+}
+
+#screen7-tasks .s7-card--hint-human,
+#taetigkeiten-screen .s7-card--hint-human {
+    background: #E7B75F;
+    color: #fff;
+}
+
+#screen7-tasks .s7-card--hint-assist,
+#taetigkeiten-screen .s7-card--hint-assist {
+    background: #37C6E6;
+    color: #fff;
+}
+
+#screen7-tasks .s7-card--hint-auto,
+#taetigkeiten-screen .s7-card--hint-auto {
+    background: #9E7CFF;
+    color: #fff;
+}
+
+#screen7-tasks .s7-actions,
+#taetigkeiten-screen .s7-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+    /* NEU */
+    max-width: 1200px;
+    /* NEU */
+    margin-left: auto;
+    /* NEU */
+    margin-right: auto;
+    /* NEU */
+}
+
+#screen7-tasks .s7-buckets-container,
+#screen7-tasks .s7-card-pool {
+    margin-bottom: 1.25rem;
+}
+
+#screen7-tasks .hidden,
+#taetigkeiten-screen .hidden {
+    display: none !important;
+}
+
+#screen7-tasks .s7-actions .btn-primary,
+#screen7-tasks .s7-actions .btn-secondary {
+    box-sizing: border-box;
+    height: 48px;
+    min-width: 170px;
+    padding: 0 20px;
+    margin: 0;
+    border-radius: 10px;
+    font-size: 1rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    box-shadow: none !important;
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+#screen7-tasks .s7-actions .btn-primary:hover,
+#screen7-tasks .s7-actions .btn-secondary:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+#screen7-tasks .s7-actions .btn-primary:active,
+#screen7-tasks .s7-actions .btn-secondary:active {
+    transform: none !important;
+}
+
+/* Intro pills */
+#screen7-tasks,
+#taetigkeiten-screen {
+    --s7-human: #E7B75F;
+    --s7-assist: #37C6E6;
+    --s7-auto: #9E7CFF;
+}
+
+#screen7-tasks .intro-pill,
+#taetigkeiten-screen .intro-pill {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+#screen7-tasks .intro-pill--human,
+#taetigkeiten-screen .intro-pill--human {
+    color: var(--s7-human);
+}
+
+#screen7-tasks .intro-pill--assist,
+#taetigkeiten-screen .intro-pill--assist {
+    color: var(--s7-assist);
+}
+
+#screen7-tasks .intro-pill--auto,
+#taetigkeiten-screen .intro-pill--auto {
+    color: var(--s7-auto);
+}
+
+/* ======================
+   RESPONSIVE FIXES
+   ====================== */
+@media (max-width: 900px) {
+    #screen7-tasks {
+        padding: 15px;
+    }
+
+    .s7-header {
+        margin-bottom: 15px;
+    }
+
+    .s7-card {
+        width: 160px;
+        padding: 10px 14px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 600px) {
+    #screen7-tasks {
+        padding: 12px;
+    }
+
+    .s7-header-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .s7-title {
+        font-size: 1.25rem;
+    }
+
+    .s7-intro {
+        font-size: 0.9rem;
+    }
+
+    .s7-card {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .s7-bucket {
+        min-height: 150px;
+    }
+
+    #screen7-tasks .s7-actions .btn-primary,
+    #screen7-tasks .s7-actions .btn-secondary {
+        min-width: 130px;
+        height: 44px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Phone Landscape */
+@media (max-height: 500px) and (orientation: landscape) {
+    #screen7-tasks {
+        padding: 10px;
+    }
+
+    .s7-header {
+        margin-bottom: 10px;
+    }
+
+    .s7-title {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+
+    .s7-intro {
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+
+    .s7-buckets-container {
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .s7-bucket {
+        min-height: 120px;
+        padding: 10px;
+    }
+
+    .s7-card {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    #screen7-tasks .s7-actions {
+        padding: 0.75rem 0;
+        margin-top: 1rem;
+    }
+
+    #screen7-tasks .s7-actions .btn-primary,
+    #screen7-tasks .s7-actions .btn-secondary {
+        height: 40px;
+        min-width: 120px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ======================
+   TOUCH DEVICE GLOBAL FIX
+   ====================== */
+@media (hover: none) and (pointer: coarse) {
+
+    .s7-card,
+    .taetigkeit-card {
+        /* Größere Touch-Targets */
+        min-height: 60px;
+        padding: 14px 16px;
+    }
+
+    /* Kein Hover-Effekt auf Touch */
+    .s7-card:hover {
+        transform: none;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+}
