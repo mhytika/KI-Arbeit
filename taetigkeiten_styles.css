@@ -1,0 +1,243 @@
+/* =============================================
+   Screen 7: Activities Sorting Styles
+   FIXED VERSION - Same approach as scenario screen
+   ============================================= */
+
+#taetigkeiten-screen {
+    display: block;
+    /* Kein Flex mit height: 100%! */
+    width: 100%;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    color: var(--text-primary);
+}
+
+/* ======================
+   HEADER
+   ====================== */
+.quiz-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.quiz-header-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+#taetigkeiten-avatar,
+.quiz-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #555;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.quiz-header-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+#taetigkeiten-role-title {
+    font-size: 1.5rem;
+    margin: 0 0 0.2rem 0;
+    color: var(--text-primary);
+}
+
+#taetigkeiten-intro-text {
+    font-size: 1rem;
+    margin: 0 auto 0.5rem auto;
+    font-weight: 500;
+    text-align: center;
+    color: var(--text-secondary);
+    max-width: 600px;
+    line-height: 1.4;
+}
+
+.taetigkeiten-instruction {
+    font-size: 1rem;
+    color: var(--accent-blue);
+    margin: 0;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* ======================
+   MAIN CONTENT
+   ====================== */
+.taetigkeiten-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.taetigkeiten-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+}
+
+/* ======================
+   CARDS - Touch-optimiert
+   ====================== */
+.taetigkeit-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.25rem;
+    width: 180px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: grab;
+    transition: all 0.2s ease;
+
+    /* TOUCH-OPTIMIERUNG */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
+}
+
+.taetigkeit-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.taetigkeit-card:active {
+    cursor: grabbing;
+    transform: scale(0.98);
+}
+
+/* ======================
+   FOOTER - Im normalen Flow, KEIN position fixed!
+   ====================== */
+.quiz-footer {
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.quiz-footer button {
+    min-width: 140px;
+    max-width: 200px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.95rem;
+    padding: 0 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+/* Keine Transform-Effekte auf Buttons */
+.quiz-footer button:hover {
+    transform: none;
+}
+
+/* ======================
+   RESPONSIVE
+   ====================== */
+@media (max-width: 900px) {
+    #taetigkeiten-screen {
+        padding: 1rem;
+    }
+
+    .taetigkeiten-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .taetigkeit-card {
+        width: calc(50% - 0.5rem);
+        min-width: 140px;
+    }
+}
+
+@media (max-width: 600px) {
+    .quiz-header-content {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    #taetigkeiten-role-title {
+        font-size: 1.25rem;
+    }
+
+    #taetigkeiten-intro-text {
+        font-size: 0.9rem;
+    }
+
+    .taetigkeit-card {
+        width: 100%;
+        max-width: 280px;
+        padding: 1rem;
+    }
+
+    .quiz-footer button {
+        min-width: 120px;
+        height: 44px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Phone Landscape */
+@media (max-height: 500px) and (orientation: landscape) {
+    #taetigkeiten-screen {
+        padding: 0.75rem;
+    }
+
+    .quiz-header {
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+    }
+
+    #taetigkeiten-role-title {
+        font-size: 1.1rem;
+    }
+
+    #taetigkeiten-intro-text {
+        font-size: 0.85rem;
+    }
+
+    .taetigkeit-card {
+        padding: 0.75rem;
+        min-height: 80px;
+    }
+
+    .quiz-footer {
+        padding: 0.75rem 0;
+    }
+
+    .quiz-footer button {
+        height: 40px;
+        font-size: 0.85rem;
+    }
+}
